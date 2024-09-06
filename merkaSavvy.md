@@ -7,7 +7,7 @@ This project has been created to address the challenge that any person has to fa
 The purpose of this project is to give a solution that allows our users to track the input and the output of what they usually buy and eat in their household and make it easier for them to remember what they have to buy and where to buy it, based on their own history. We want to impact huundreds of thousands of people who want an easier and mre tidy experience for their personal finances and purchases.
 
 ## Whom for?
-This project is aimed at anyone, of any age, of any profession who wants to optimize their daily shopping experience of their household goods. Most of the users who are young adults who are not living with their parents anymore and are starting to live in their own and want to start to keep in order their live will find this very interestingsuarios de [tipo de usuario o grupo] encontrarán este proyecto especialmente útil para [especificar cómo les ayudará].
+This project is aimed at anyone, of any age, of any profession who wants to optimize their daily shopping experience of their household goods. Most of the users who are young adults who are not living with their parents anymore and are starting to live by their own and want to start to keep the order in their live will find this very interesting and useful.
 
 ## Temática Elegida
 La temática de este proyecto es [describir brevemente la temática o área de enfoque]. Elegimos esta temática porque [razón de la elección, por ejemplo, relevancia actual, interés personal, brecha en el mercado, etc.]. Nuestra solución se enfoca en [aspectos específicos de la temática que aborda el proyecto].
