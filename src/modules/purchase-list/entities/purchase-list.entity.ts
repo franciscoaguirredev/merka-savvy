@@ -1,5 +1,5 @@
-import { BaseList } from "src/base-list/entities/base-list.entity";
-import { Customer } from "src/customer/entities/customer.entity";
+import { BaseList } from "src/modules/base-list/entities/base-list.entity";
+import { Customer } from "src/modules/customer/entities/customer.entity";
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('purchaseLists')

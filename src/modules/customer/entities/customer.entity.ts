@@ -1,5 +1,5 @@
-import { BaseList } from "src/base-list/entities/base-list.entity";
-import { PurchaseList } from "src/purchase-list/entities/purchase-list.entity";
+import { BaseList } from "src/modules/base-list/entities/base-list.entity";
+import { PurchaseList } from "src/modules/purchase-list/entities/purchase-list.entity";
 import { Column, CreateDateColumn, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity("customers")
