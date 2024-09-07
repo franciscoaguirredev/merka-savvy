@@ -1,7 +1,5 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Inject } from '@nestjs/common';
-import { CustomerService } from './customer.service';
+import { Controller, Post, Body, Inject } from '@nestjs/common';
 import { CreateCustomerDto } from './dtos/create-customer.dto';
-import { UpdateCustomerDto } from './dtos/update-customer.dto';
 import { ICustomerService } from './interfaces/customer.service.interface';
 import { Customer } from './entities/customer.entity';
 
