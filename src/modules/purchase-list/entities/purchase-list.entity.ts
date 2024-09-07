@@ -22,6 +22,6 @@ export class PurchaseList {
     @Column('date')
     purchaseDate: Date;
 
-    @Column({ type: 'json', nullable: true })
+    @Column({ type: 'json' })
     baseListJson: any;
 }
