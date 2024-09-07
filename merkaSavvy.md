@@ -9,35 +9,32 @@ The purpose of this project is to give a solution that allows our users to track
 ## Whom for?
 This project is aimed at anyone, of any age, of any profession who wants to optimize their daily shopping experience of their household goods. Most of the users who are young adults who are not living with their parents anymore and are starting to live by their own and want to start to keep the order in their live will find this very interesting and useful.
 
-## Temática Elegida
-La temática de este proyecto es [describir brevemente la temática o área de enfoque]. Elegimos esta temática porque [razón de la elección, por ejemplo, relevancia actual, interés personal, brecha en el mercado, etc.]. Nuestra solución se enfoca en [aspectos específicos de la temática que aborda el proyecto].
+## Chosen Category
+The category of this project is personal finances and logistics because we don´t force the user to enter only household items, It can track any kind of product the user wants. We chose this category because is currently relevant for everybody and affects our personal lives. Our solution is focused on be useful and improve the personal and family finances.
 
-## Integrantes
+## Members
 
-### [Francisco Alberto Aguirre]
-- **Rol**: [Rol en el proyecto, por ejemplo, Desarrollador, Diseñador]
-- **Correo Electrónico**: [correo@ejemplo.com]
-- **LinkedIn**: [\[linkedin.com/in/usuario](https://www.linkedin.com/in/francoag/)
-- **GitHub**: [franciscoaguirredev]
+### Daniel Alejandro Lopez Naranjo
+- **Role**: Backend Developer
+- **Email**: dalona126@hotmail.com
+- **LinkedIn**: [Daniel Lopez Naranjo](https://www.linkedin.com/in/daniel-lopez-naranjo-9a0b181aa/)
+- **GitHub**: [dalona](https://github.com/dalona)
 
-### [Nombre del Integrante 2]
-- **Rol**: [Rol en el proyecto]
-- **Correo Electrónico**: [correo@ejemplo.com]
-- **LinkedIn**: [linkedin.com/in/usuario]
-- **GitHub**: [github.com/usuario]
+### Francisco Alberto Aguirre Agudelo
+- **Role**: Backend Developer
+- **Email**: franco.hopper.riwi@gmail.com
+- **LinkedIn**: [Francisco Aguirre](https://www.linkedin.com/in/francoag/)
+- **GitHub**: [franciscoaguirredev](https://github.com/franciscoaguirredev)
 
-### [Nombre del Integrante 3]
-- **Rol**: [Rol en el proyecto]
-- **Correo Electrónico**: [correo@ejemplo.com]
-- **LinkedIn**: [linkedin.com/in/usuario]
-- **GitHub**: [github.com/usuario]
+### Andres Felipe Hernandez Cordoba 
+- **Role**: Backend Developer
+- **Email**: [pipehernadez1998@gmail.com]
+- **LinkedIn**: [Andres Hernández](https://www.linkedin.com/in/andr%C3%A9s-hern%C3%A1ndez-374492227/)
+- **GitHub**: [pipehernandez](https://github.com/pipehernandez)
 
-## Cómo Contribuir
-Si estás interesado en contribuir a este proyecto, por favor, sigue las [directrices de contribución](CONTRIBUTING.md) y revisa el [código de conducta](CODE_OF_CONDUCT.md).
-
-## Licencia
-Este proyecto está bajo la Licencia [Nombre de la Licencia]. Consulta el archivo [LICENSE](LICENSE) para más detalles.
+## How to Contribute
+If you are interested in contributing to this project, please follow the [contribution guidelines](CONTRIBUTING.md) and review the [code of conduct](CODE_OF_CONDUCT.md).
 
 ---
 
-Gracias por tu interés en nuestro proyecto. ¡Estamos emocionados de compartirlo contigo y esperamos tus comentarios y contribuciones!
+Thank you for your interest in our project. We are excited to share it with you and look forward to your feedback and contributions!
