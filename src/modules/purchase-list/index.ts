@@ -1,6 +1,0 @@
-export * from './purchase-list.module'
-export * from './purchase-list.controller'
-export * from './purchase-list.service'
-export * from './entities/purchase-list.entity'
-export * from './dto/create-purchase-list.dto'
-export * from './dto/update-purchase-list.dto'
