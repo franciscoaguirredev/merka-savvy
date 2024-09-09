@@ -5,14 +5,14 @@ import { Customer } from './entities/customer.entity';
 
 @Controller('customers')
 export class CustomerController {
-  // constructor(
-  //   @Inject('ICustomerService') private readonly customerService: ICustomerService
-  // ) {}
+  constructor(
+    private readonly customerService: ICustomerService
+  ) {}
 
-  // @Post('register')
-  // async create(@Body() createCustomerDto: CreateCustomerDto): Promise<Customer> {
-  //   const customer = await this.customerService.create(createCustomerDto);
-  //   return customer;
-  // }
+  @Post('register')
+  async create(@Body() createCustomerDto: CreateCustomerDto): Promise<Customer> {
+    const customer = await this.customerService.create(createCustomerDto);
+    return customer;
+  }
 
 }

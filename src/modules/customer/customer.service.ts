@@ -6,13 +6,18 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class CustomerService {
-  // constructor(
-  // @InjectRepository(Customer)
-  // private readonly customerRepository: Repository<Customer>
-  // ){}
+  constructor(
+  @InjectRepository(Customer)
+  private readonly customerRepository: Repository<Customer>
+  ){}
 
-  // async create(createCustomerDto: CreateCustomerDto): Promise<Customer> {
-  //   const customer = this.customerRepository.create(createCustomerDto);
-  //   return this.customerRepository.save(customer);
-  // }
+  async create(createCustomerDto: CreateCustomerDto): Promise<Customer> {
+    try {
+    const customer = this.customerRepository.create(createCustomerDto);
+    return await this.customerRepository.save(customer);
+    } catch (error) {
+      throw new Error(error.message)
+    }
+    
+  }
 }

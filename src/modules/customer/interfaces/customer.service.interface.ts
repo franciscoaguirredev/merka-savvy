@@ -3,5 +3,5 @@ import { Customer } from "../entities/customer.entity";
 
 
 export interface ICustomerService{
-    // create(createCustomerDto: CreateCustomerDto): Promise<Customer>;
+    create(createCustomerDto: CreateCustomerDto): Promise<Customer>;
 }

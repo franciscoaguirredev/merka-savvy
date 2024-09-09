@@ -10,7 +10,6 @@ import { CustomerController } from './customer.controller';
     TypeOrmModule.forFeature([Customer]),
   ],
   controllers: [CustomerController],
-  providers: [CustomerService, Customer],
-  exports: [CustomerService]
+  providers: [CustomerService]
 })
 export class CustomerModule {}
