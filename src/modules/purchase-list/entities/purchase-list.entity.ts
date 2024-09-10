@@ -1,6 +1,6 @@
 import { BaseList } from "src/modules/base-list/entities/base-list.entity";
 import { Customer } from "src/modules/customer/entities/customer.entity";
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, Timestamp } from "typeorm";
 
 @Entity('purchaseLists')
 export class PurchaseList {
@@ -13,9 +13,15 @@ export class PurchaseList {
     @Column('int')
     total: number;
 
+    // @Column(
+        // {
+        // type: 'timestamptz',
+        // default: () => `CURRENT_TIMESTAMP AT TIME ZONE 'GMT-5'`}
+    // )
     @Column({
-        type: 'timestamptz',
-        default: () => `CURRENT_TIMESTAMP AT TIME ZONE 'GMT-5'`})
+        type: 'datetime',
+        name: 'purchaseDate',
+        default: () => 'CURRENT_TIMESTAMP' })
     purchaseDate: Date;
 
     @Column({ type: 'json', nullable: true })
