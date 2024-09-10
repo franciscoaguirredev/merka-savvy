@@ -3,6 +3,7 @@ import { CreateCustomerDto } from './dto/create-customer.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Customer } from './entities/customer.entity';
 import { Repository } from 'typeorm';
+import * as bcrypt from 'bcrypt'
 
 @Injectable()
 export class CustomerService {
@@ -13,8 +14,16 @@ export class CustomerService {
 
   async create(createCustomerDto: CreateCustomerDto): Promise<Customer> {
     try {
-    const customer = this.customerRepository.create(createCustomerDto);
-    return await this.customerRepository.save(customer);
+      const customer = this.customerRepository.create(createCustomerDto);
+      const password = customer.password
+
+      // to encrypt the password
+      const hashedPassword = await bcrypt.hash(password, 10);
+      customer.password = hashedPassword;
+      
+      // to compare encrypted password and real password
+      const isMatch = await bcrypt.compare(password, hashedPassword)
+      return await this.customerRepository.save(customer);
     } catch (error) {
       throw new Error(error.message)
     }
