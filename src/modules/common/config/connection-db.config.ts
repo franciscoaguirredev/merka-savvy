@@ -8,7 +8,7 @@ export class DatabaseConfigService implements TypeOrmOptionsFactory {
   createTypeOrmOptions(): TypeOrmModuleOptions {
     console.log({ envConfig: EnvConfig() });
     return {
-        type: 'postgres',
+        type: 'mysql',
         host: EnvConfig().host,
         port: EnvConfig().port,
         database: EnvConfig().name,
