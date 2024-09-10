@@ -26,23 +26,8 @@ export class Customer {
         nullable: false })
     password: string;
     
-    // @CreateDateColumn(
-        // {
-        // name: 'created_at',
-        // type: 'timestamptz',
-        // default: () => `CURRENT_TIMESTAMP AT TIME ZONE 'GMT-5'`}
-    // )
-
     @CreateDateColumn({ type: 'timestamp' })
     registrationDate: Date;
-
-    // @UpdateDateColumn(
-    //     {
-    // name: 'updated_at',
-    // type: 'timestamptz',
-    // default: () => `CURRENT_TIMESTAMP AT TIME ZONE 'GMT-5'`,
-    // onUpdate: `CURRENT_TIMESTAMP AT TIME ZONE 'GMT-5'`,}
-    // )
 
     @UpdateDateColumn({ type: 'timestamp' })
     lastUpdateDate: Date;

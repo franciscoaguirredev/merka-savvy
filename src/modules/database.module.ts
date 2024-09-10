@@ -9,9 +9,7 @@ import { DatabaseConfigService } from './common/config/connection-db.config';
     }),
   ],
   providers: [
-    DatabaseConfigService,
-
-],
+    DatabaseConfigService,],
   exports: [DatabaseConfigService],
 })
 export class DatabaseModule{}
