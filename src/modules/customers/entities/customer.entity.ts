@@ -35,7 +35,7 @@ export class Customer {
     @UpdateDateColumn({ type: 'timestamp' })
     lastUpdateDate: Date;
 
-    @ManyToMany(() => BaseList, baseList => baseList.customer)
+    @OneToOne(() => BaseList, baseList => baseList.customer)
     baseList: BaseList;
 
     @OneToMany(() => PurchaseList, purchaseList => purchaseList.customer)
