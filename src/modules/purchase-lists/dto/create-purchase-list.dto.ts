@@ -6,10 +6,6 @@ export class CreatePurchaseListDto {
     @Min(1)
     userId?: number;
 
-    @IsDate()
-    @IsNotEmpty()
-    date: Date;
-
     @IsNumber()
     @IsNotEmpty()
     total: number;

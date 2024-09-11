@@ -7,9 +7,6 @@ export class PurchaseList {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column('date')
-    date: Date;
-
     @Column('int')
     total: number;
 

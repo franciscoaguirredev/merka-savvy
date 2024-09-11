@@ -5,4 +5,4 @@ interface Product{
     provider: string;
     measure: string;
     isActive: boolean;
-} 
+}
