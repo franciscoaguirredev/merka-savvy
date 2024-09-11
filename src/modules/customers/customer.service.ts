@@ -19,8 +19,7 @@ export class CustomerService {
 
       const hashedPassword = await bcrypt.hash(password, 10);
       customer.password = hashedPassword;
-      
-    //   const isMatch = await bcrypt.compare(password, hashedPassword)
+
        return await this.customerRepository.save(customer);
     } catch (error) {
       throw new Error(error.message)
@@ -28,16 +27,6 @@ export class CustomerService {
   }
 
   async findOneByEmail(email:string){
-    return  this.customerRepository.findOneBy({email:email})
-    
-  }
-
-  
+    return  this.customerRepository.findOneBy({email:email}) 
+  }  
 }
-// async findOneByEmail(email:string){
-//   try {
-//     return await this.customerRepository.findOneBy({email:email})
-//   } catch (error) {
-//     throw new Error(error.message)
-//   }
-// }
