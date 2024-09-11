@@ -1,19 +1,32 @@
 import { Module } from '@nestjs/common';
-import { AuthController } from './auth.controller';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthService } from './auth.service';
-import { CustomerModule } from 'src/modules/customers';
+import { AuthController } from './auth.controller';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Customer, CustomerService } from 'src/modules/customers';
+import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
-import { jwtConstants } from './constants/jwt.constants';
+import { JwtStrategy } from './strategies/jwt.strategy';
+
 
 @Module({
-  imports: [CustomerModule,
-    JwtModule.register({
-      global: true, // Make the JWT module global
-      secret: jwtConstants.secret, // Replace with your secret key
-      signOptions: { expiresIn: '1h' }, // Token expiration time
+  imports:[ConfigModule ,TypeOrmModule.forFeature([Customer]), 
+    PassportModule.register({defaultStrategy:'jwt'}),
+    JwtModule.registerAsync({
+      imports:[ConfigModule],
+      inject:[ConfigService],
+      useFactory:(configService:ConfigService)=>{      
+        return {
+          secret:configService.get('JWT_SECRET'),
+          signOptions:{
+          expiresIn:'2h'
+        }
+      }
+    }
     })
   ],
   controllers: [AuthController],
-  providers: [AuthService]
+  providers: [AuthService, CustomerService, JwtStrategy],
+  exports:[TypeOrmModule, JwtStrategy, PassportModule, JwtModule]
 })
 export class AuthModule {}

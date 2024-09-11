@@ -27,9 +27,17 @@ export class CustomerService {
     }
   }
 
-  findOneByEmail(email:string){
-    return this.customerRepository.findOneBy({email:email})
+  async findOneByEmail(email:string){
+    return  this.customerRepository.findOneBy({email:email})
+    
   }
 
   
 }
+// async findOneByEmail(email:string){
+//   try {
+//     return await this.customerRepository.findOneBy({email:email})
+//   } catch (error) {
+//     throw new Error(error.message)
+//   }
+// }

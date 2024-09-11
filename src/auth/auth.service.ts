@@ -1,38 +1,43 @@
-import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
-import { CustomerService } from 'src/modules/customers';
-import { LoginDto } from './dto/login.dto';
-import * as bcrypt from 'bcrypt';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
+import { Repository } from 'typeorm';
+import * as bcrypt from 'bcrypt';
+import { JwtPayload } from './interfaces/jwt-payload-interface';
+import { Customer } from 'src/modules/customers';
+import { LoginDto } from './dto/login.dto';
+
 
 @Injectable()
 export class AuthService {
 
-    constructor(private readonly CustomerService: CustomerService,
-        private readonly jwtService: JwtService,
+    constructor(
+        @InjectRepository(Customer) private readonly userRepository:Repository<Customer>,
+        private readonly jwtService:JwtService,
     ){}
 
-    async login({email,password}:LoginDto) {
-
-        const customer = await this.CustomerService.findOneByEmail(email);
-        if(!customer){
-            throw new UnauthorizedException('Email is Wrong');} 
-        
-            const isPasswordValid = await bcrypt.compare (password, customer.password)
-
-            if(!isPasswordValid){
-                throw new UnauthorizedException('Password is Wrong');
-            }
 
 
-            const payload = {email: customer.email, role: customer.role};
+    async login(loginDto:LoginDto){
+        const {password, email} = loginDto
 
-            const token = await this.jwtService.signAsync(payload);
+        const user = await this.userRepository.findOne({where:{email}, select: {email:true, password:true}})
+        console.log(user)
 
-            return {
-                token,
-                email
-            }; 
+        if(!user || !bcrypt.compareSync(password, user.password))
+             throw new UnauthorizedException('Credentials are not valid')
+            console.log()
+        return {
+            ...user,
+            token:this.getJwtToken({email: user.email})
+        }
     }
-    
+
+    private getJwtToken(payload:JwtPayload){
+        const token = this.jwtService.sign(payload);
+        return token
+    }
+
+
 }
 
