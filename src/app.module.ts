@@ -6,6 +6,7 @@ import { CustomerModule } from './modules/customers';
 import { PurchaseListModule } from './modules/purchase-lists';
 import { DatabaseModule } from './modules/database.module';
 import { ConfigModule } from '@nestjs/config';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -13,7 +14,8 @@ import { ConfigModule } from '@nestjs/config';
     BaseListModule,
     CustomerModule,
     PurchaseListModule,
-    DatabaseModule
+    DatabaseModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],
