@@ -15,6 +15,11 @@ export class CustomerService {
 
   async create(createCustomerDto: CreateCustomerDto): Promise<Customer> {
     try {
+      const existingCustomer = await this.customerRepository.findOneBy({ email: createCustomerDto.email });
+      if (existingCustomer) {
+        throw new Error(`Customer with email ${createCustomerDto.email} already exists`);
+      }
+
       const customer = this.customerRepository.create(createCustomerDto);
       const password = customer.password
 
