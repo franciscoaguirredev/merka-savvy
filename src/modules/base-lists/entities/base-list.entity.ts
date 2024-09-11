@@ -1,6 +1,6 @@
 import { Customer } from "src/modules/customers/entities/customer.entity";
 import { PurchaseList } from "src/modules/purchase-lists/entities/purchase-list.entity";
-import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('baseLists')
 export class BaseList {
@@ -25,8 +25,8 @@ export class BaseList {
     @Column({ type: 'boolean', default: true})
     isActive: boolean;
 
-    @OneToOne(() => Customer, customer => customer.baseList)
-    @JoinColumn({ name: 'customerUuid' })
+    @ManyToMany(() => Customer, customer => customer.baseList)
+    @JoinTable()
     customer: Customer;
 
     @OneToMany(() => PurchaseList, purchaseList => purchaseList.baseList)
