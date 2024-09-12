@@ -25,8 +25,8 @@ export class BaseList {
     @Column({ type: 'boolean', default: true})
     isActive: boolean;
 
-    @ManyToMany(() => Customer, customer => customer.baseList)
-    @JoinTable()
+    @OneToMany(() => Customer, customer => customer.baseList)
+    @JoinColumn()
     customer: Customer;
 
     @OneToMany(() => PurchaseList, purchaseList => purchaseList.baseList)
