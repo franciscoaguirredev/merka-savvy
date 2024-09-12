@@ -41,5 +41,5 @@ export class Customer {
     purchaseListsId: any;
 
     @ManyToOne(() => Role, Role => Role.id)
-    role: Role[];
+    role: number;
 }
