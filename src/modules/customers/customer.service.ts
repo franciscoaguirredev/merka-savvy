@@ -18,6 +18,7 @@ export class CustomerService {
       const customer = this.customerRepository.create(createCustomerDto);
       const hashedPassword = await bcrypt.hash(customer.password, 10);
       customer.password = hashedPassword;
+      customer.role = 2
       return await this.customerRepository.save(customer);
     } catch (error) {
       throw new Error(error.message)
