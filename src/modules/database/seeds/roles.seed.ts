@@ -1,6 +1,6 @@
 import { Seeder} from 'typeorm-extension';
 import { DataSource } from 'typeorm';
-import { Role } from '../roles';
+import { Role } from 'src/modules/roles';
 
 
 export default class CreateRoles implements Seeder{
