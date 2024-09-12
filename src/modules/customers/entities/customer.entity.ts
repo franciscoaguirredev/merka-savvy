@@ -26,9 +26,6 @@ export class Customer {
         select: false, 
         nullable: false })
     password: string;
-
-    @Column({default: 'customer'})
-    role: string;
     
     @CreateDateColumn({ type: 'timestamp' })
     registrationDate: Date;
