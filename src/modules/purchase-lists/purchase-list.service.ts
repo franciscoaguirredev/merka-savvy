@@ -13,29 +13,67 @@ export class PurchaseListService {
   ){}
 
 
-  create(createPurchaseListDto: CreatePurchaseListDto) {
-    return 'This action adds a new purchaseList';
+  async create(createPurchaseListDto: CreatePurchaseListDto) {
+    try{
+      const purchaseList = this.purchaseListRespository.create(createPurchaseListDto)
+      return await this.purchaseListRespository.save(createPurchaseListDto)
+    }
+    catch(error){
+      throw new Error(error.message)
+    }
   }
 
-  async findAll() {
+  async findAll():Promise<PurchaseList[]> {
     try {
-      const findAll = await this.purchaseListRespository.find()
-      console.log(findAll)
-      return findAll;
+      return await this.purchaseListRespository.find()
     } catch (error) {
       console.log(error)
     }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} purchaseList`;
+  async findOne(id: number) {
+    try{
+      return await this.purchaseListRespository.findOneBy({id});
+    }catch(error){
+      throw new Error(error.message)
+    }
   }
 
-  update(id: number, updatePurchaseListDto: UpdatePurchaseListDto) {
-    return `This action updates a #${id} purchaseList`;
+  async update(id: number, updatePurchaseListDto: UpdatePurchaseListDto) {
+    const findpurchaseList = await this.purchaseListRespository.preload({
+      id:id,
+      ...updatePurchaseListDto
+    })
+
+    if(!findpurchaseList){
+      return `Purchase List with id ${id} not found`
+    }
+
+    try {
+      await this.purchaseListRespository.save(updatePurchaseListDto);
+      return updatePurchaseListDto;
+    } catch (error) {
+      console.log(`Error is: ${error}`)
+    }
+
+    return `Purchase List with id ${id} has been updated`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} purchaseList`;
+    async remove(id: number) {
+      const findpurchaseList = await this.purchaseListRespository.findOneBy({id});
+      if(!findpurchaseList){
+        return `Purchase List with id ${id} not found`
+      }
+      try{
+        await this.purchaseListRespository.delete(id)
+        return `Purchase List with id ${id} has been deleted`
+      } catch(error){
+        console.log(`Error is: ${error}`)
+      }
+    }
   }
-}
+  
+
+
+ 
+

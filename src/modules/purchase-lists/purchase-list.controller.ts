@@ -18,7 +18,7 @@ export class PurchaseListController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: number): Promise <CreatePurchaseListDto> {
     return this.purchaseListService.findOne(+id);
   }
 

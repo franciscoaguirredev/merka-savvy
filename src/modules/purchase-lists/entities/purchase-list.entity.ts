@@ -5,7 +5,7 @@ import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGenerat
 @Entity('purchaseLists')
 export class PurchaseList {
     @PrimaryGeneratedColumn('uuid')
-    id: string;
+    id: number;
 
     @Column('int')
     total: number;
