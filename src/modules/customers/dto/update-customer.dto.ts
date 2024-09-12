@@ -1,17 +1,17 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateCustomerDto } from './create-customer.dto';
-import { IsOptional, IsString } from 'class-validator';
+import { IsEmail, IsOptional, IsString, MinLength } from "class-validator";
 
-export class UpdateCustomerDto extends PartialType(CreateCustomerDto) {
-    @IsOptional()
+export class UpdateCustomerDto {
     @IsString()
-    readonly name?: string;
+    @IsOptional()
+    name?: string;
 
-    @IsOptional()
     @IsString()
-    readonly email?: string;
+    @IsOptional()
+    @IsEmail(null, { message: 'Please enter a valid email adress' })
+    email?: string;
 
-    @IsOptional()
     @IsString()
-    readonly password?: string;
+    @IsOptional()
+    @MinLength(8, { message: 'Password must have at least 8 characters'})
+    password?: string;
 }

@@ -15,4 +15,5 @@ export class CreateCustomerDto {
   @MinLength(8, { message: 'Password must have at least 8 characters'})
   @IsNotEmpty()
   password: string;
+
 }

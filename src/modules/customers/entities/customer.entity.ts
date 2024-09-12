@@ -1,6 +1,7 @@
+
 import { BaseList } from "src/modules/base-lists/entities/base-list.entity";
-import { PurchaseList } from "src/modules/purchase-lists/entities/purchase-list.entity";
-import { Column, CreateDateColumn, Entity, ManyToMany, OneToMany, OneToOne, PrimaryGeneratedColumn, Timestamp, UpdateDateColumn } from "typeorm";
+import { PurchaseList } from "src/modules/purchase-lists";
+import { Column, CreateDateColumn, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn, Timestamp, UpdateDateColumn } from "typeorm";
 
 @Entity("customers")
 export class Customer {
@@ -25,14 +26,14 @@ export class Customer {
         select: false, 
         nullable: false })
     password: string;
-    
+
     @CreateDateColumn({ type: 'timestamp' })
     registrationDate: Date;
 
     @UpdateDateColumn({ type: 'timestamp' })
     lastUpdateDate: Date;
 
-    @ManyToMany(() => BaseList, baseList => baseList.customer)
+    @OneToOne(() => BaseList, baseList => baseList.customer)
     baseList: BaseList;
 
     @OneToMany(() => PurchaseList, purchaseList => purchaseList.customer)
