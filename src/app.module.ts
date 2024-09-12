@@ -6,6 +6,7 @@ import { CustomerModule } from './modules/customers';
 import { PurchaseListModule } from './modules/purchase-lists';
 import { DatabaseModule } from './modules/database.module';
 import { ConfigModule } from '@nestjs/config';
+import { RolesModule } from './modules/roles/roles.module';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
@@ -14,6 +15,7 @@ import { AuthModule } from './auth/auth.module';
     BaseListModule,
     CustomerModule,
     PurchaseListModule,
+    RolesModule,
     DatabaseModule,
     AuthModule
   ],
