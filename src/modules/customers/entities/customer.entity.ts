@@ -38,4 +38,8 @@ export class Customer {
 
     @OneToMany(() => PurchaseList, purchaseList => purchaseList.customer)
     purchaseLists: PurchaseList[];
+    purchaseListsId: any;
+
+    @ManyToOne(() => Role, Role => Role.id)
+    role: Role[];
 }
