@@ -7,12 +7,12 @@ export class CreateCustomerDto {
   name: string;
 
   @IsString()
-  @IsEmail(null, { message: 'Please enter a valid email address'})
+  @IsEmail({}, { message: 'Please enter a valid email address' })
   @IsNotEmpty()
   email: string;
 
   @IsString()
-  @MinLength(8, { message: 'Password must have at least 8 characters'})
+  @MinLength(8, { message: 'Password must have at least 8 characters' })
   @IsNotEmpty()
   password: string;
 

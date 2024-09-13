@@ -7,7 +7,7 @@ export class UpdateCustomerDto {
 
     @IsString()
     @IsOptional()
-    @IsEmail(null, { message: 'Please enter a valid email adress' })
+    @IsEmail({}, { message: 'Please enter a valid email adress' })
     email?: string;
 
     @IsString()

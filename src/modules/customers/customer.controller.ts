@@ -11,7 +11,7 @@ export class CustomerController {
 
   @Post('register')
   async create(@Body() createCustomerDto: CreateCustomerDto): Promise<Customer> {
-    return this.customerService.create(createCustomerDto);
+    return await this.customerService.create(createCustomerDto);
     }
     
   @Patch('update/:email')
