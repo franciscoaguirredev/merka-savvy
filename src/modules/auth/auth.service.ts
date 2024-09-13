@@ -25,7 +25,7 @@ export class AuthService {
         console.log(user)
 
         if(!user || !bcrypt.compareSync(password, user.password))
-             throw new UnauthorizedException('Credentials are not valid')
+            throw new UnauthorizedException('Credentials are not valid')
             console.log()
         return {
             ...user,

@@ -14,13 +14,13 @@ export class CustomerController {
     return await this.customerService.create(createCustomerDto);
     }
     
-  @Patch('update/:email')
-  async update(@Param('email') email: string, @Body() updateCustomerDto: UpdateCustomerDto): Promise<Customer>{
+  @Patch('update/')
+  async update(@Body('email') email: string, @Body() updateCustomerDto: UpdateCustomerDto): Promise<Customer>{
     return await this.customerService.update(email, updateCustomerDto);
   }
 
-  @Delete('delete/:email')
-  async remove(@Param('email') email: string): Promise<{ message: string }> {
+  @Delete('')
+  async remove(@Body('email') email: string): Promise<{ message: string }> {
     await this.customerService.remove(email);
     return { message: `Customer with email ${email} deleted succesfully` };
   }
