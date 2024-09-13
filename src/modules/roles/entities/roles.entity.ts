@@ -4,7 +4,7 @@ import { Customer } from "src/modules/customers/entities/customer.entity";
 @Entity("roles")
 export class Role{
 
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn('increment')
     id:number
 
     @Column()
