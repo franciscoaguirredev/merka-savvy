@@ -5,13 +5,13 @@ import { Column, CreateDateColumn, Entity, ManyToMany, ManyToOne, OneToMany, One
 
 @Entity("customers")
 export class Customer {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+    @PrimaryGeneratedColumn('increment')
+    id: number;
 
     @Column('varchar',{
-    length: 150,
-    nullable: false,
-    name: 'name'})
+        length: 150,
+        nullable: false,
+        name: 'name'})
     name: string;
 
     @Column('varchar',{
@@ -33,13 +33,13 @@ export class Customer {
     @UpdateDateColumn({ type: 'timestamp' })
     lastUpdateDate: Date;
 
-    @ManyToMany(() => BaseList, baseList => baseList.customer)
-    baseList: BaseList;
+    @OneToMany(() => BaseList, baseList => baseList.customer)
+    baseLists: BaseList[];
 
     @OneToMany(() => PurchaseList, purchaseList => purchaseList.customer)
     purchaseLists: PurchaseList[];
     purchaseListsId: any;
 
     @ManyToOne(() => Role, Role => Role.id)
-    role: Role[];
+    role: number;
 }

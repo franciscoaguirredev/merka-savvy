@@ -4,7 +4,9 @@ import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGenerat
 
 @Entity('purchaseLists')
 export class PurchaseList {
-    @PrimaryGeneratedColumn('uuid')
+
+     @PrimaryGeneratedColumn('increment')
+
     id: number;
 
     @Column('int')
