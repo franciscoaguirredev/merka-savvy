@@ -1,34 +1,22 @@
-import { Customer } from "src/modules/customers/entities/customer.entity";
-import { PurchaseList } from "src/modules/purchase-lists/entities/purchase-list.entity";
-import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, ManyToMany, PrimaryGeneratedColumn, JoinTable } from 'typeorm';
+import { Customer } from 'src/modules/customers/entities/customer.entity';
+import { Product } from 'src/modules/products/entities/product.entity';
 
 @Entity('baseLists')
 export class BaseList {
-    @PrimaryGeneratedColumn('uuid')
+    @PrimaryGeneratedColumn('increment')
     id: string;
 
-    @Column()
-    productName: string;
+    @Column({nullable:false})
+    name: string;
 
-    @Column('int')
-    price: number;
 
-    @Column('int')
-    quantity: number;
-
-    @Column()
-    provider: string;
-
-    @Column()
-    measure: string;
-
-    @Column({ type: 'boolean', default: true})
-    isActive: boolean;
-
-    @OneToMany(() => Customer, customer => customer.baseList)
-    @JoinColumn()
+    @ManyToOne(() => Customer, customer => customer.baseLists)
     customer: Customer;
 
-    @OneToMany(() => PurchaseList, purchaseList => purchaseList.baseList)
-    purchaseLists: PurchaseList[];
+
+    @ManyToMany(() => Product, product => product.baseLists)
+    @JoinTable() 
+    products: Product[];
+    purchaseLists: any;
 }

@@ -8,12 +8,14 @@ import { DatabaseModule } from './modules/database.module';
 import { ConfigModule } from '@nestjs/config';
 import { RolesModule } from './modules/roles/roles.module';
 import { AuthModule } from './auth/auth.module';
+import { ProductModule } from './modules/products/product.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
     BaseListModule,
     CustomerModule,
+    ProductModule,
     PurchaseListModule,
     RolesModule,
     DatabaseModule,
