@@ -5,7 +5,7 @@ import { Product } from 'src/modules/products/entities/product.entity';
 @Entity('baseLists')
 export class BaseList {
     @PrimaryGeneratedColumn('increment')
-    id: string;
+    id: number;
 
     @Column({nullable:false})
     name: string;

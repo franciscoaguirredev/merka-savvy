@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { PurchaseListService } from './purchase-list.service';
 import { CreatePurchaseListDto } from './dto/create-purchase-list.dto';
 import { UpdatePurchaseListDto } from './dto/update-purchase-list.dto';
+import { PurchaseList } from './entities/purchase-list.entity';
 
 @Controller('purchase-list')
 export class PurchaseListController {
@@ -18,7 +19,7 @@ export class PurchaseListController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: number): Promise <CreatePurchaseListDto> {
+  findOne(@Param('id') id: number): Promise <PurchaseList> {
     return this.purchaseListService.findOne(+id);
   }
 

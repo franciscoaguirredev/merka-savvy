@@ -10,6 +10,6 @@ import { Product } from '../products/entities/product.entity';
   imports:[ TypeOrmModule.forFeature([BaseList, Customer, Product])],
   controllers: [BaseListController],
   providers: [BaseListService],
-  exports:[BaseListModule]
+  exports:[BaseListService]
 })
 export class BaseListModule {}

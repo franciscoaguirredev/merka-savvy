@@ -44,8 +44,8 @@ export class BaseListService {
     return `This action returns all baseList`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} baseList`;
+  async findOne(id: number) {
+    return await this.customerRepository.findOneBy({id:id});
   }
 
   update(id: number, updateBaseListDto: UpdateBaseListDto) {

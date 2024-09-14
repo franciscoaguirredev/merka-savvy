@@ -11,7 +11,7 @@ export class CreateBaseListDto {
 
     @IsNotEmpty()
     @IsArray()
-    productIds: string[];
+    productIds: number[];
 
     
 

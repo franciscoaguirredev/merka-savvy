@@ -1,16 +1,21 @@
-import { IsArray, IsBoolean, IsDate, IsInt, IsNotEmpty, IsNumber, IsOptional, Min } from "class-validator";
+import { IsArray, IsBoolean, IsDateString, IsInt, IsNotEmpty, IsNumber, IsOptional, Min } from "class-validator";
 
 export class CreatePurchaseListDto {
-    @IsOptional()
+    @IsNotEmpty()
     @IsInt()
     @Min(1)
-    userId?: number;
+    customerId: number;
+
+    @IsNotEmpty()
+    @IsInt()
+    @Min(1)
+    baseListId: number;
 
     @IsNumber()
     @IsNotEmpty()
     total: number;
 
-    @IsDate()
+    @IsDateString()
     @IsNotEmpty()
     purchaseDate: Date;
 

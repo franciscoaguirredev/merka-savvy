@@ -20,6 +20,7 @@ export class CustomerService {
       const hashedPassword = await bcrypt.hash(password, 10);
       customer.password = hashedPassword;
 
+      customer.role = 2
        return await this.customerRepository.save(customer);
     } catch (error) {
       throw new Error(error.message)
@@ -29,4 +30,8 @@ export class CustomerService {
   async findOneByEmail(email:string){
     return  this.customerRepository.findOneBy({email:email}) 
   }  
+
+  async findOne(id: number) {
+    return await this.customerRepository.findOneBy({id:id});
+  }
 }
