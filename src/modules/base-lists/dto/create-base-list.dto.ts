@@ -1,4 +1,4 @@
-import { IsString, IsArray, IsNumber, IsNotEmpty } from 'class-validator';
+import { IsString, IsArray, IsNumber, IsNotEmpty, ArrayNotEmpty, ArrayContains, IsInt } from 'class-validator';
 
 export class CreateBaseListDto {
     @IsNotEmpty()
@@ -11,7 +11,7 @@ export class CreateBaseListDto {
 
     @IsNotEmpty()
     @IsArray()
-    productIds: number[];
+    productIds: string[];
 
     
 

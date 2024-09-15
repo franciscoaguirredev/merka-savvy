@@ -29,7 +29,7 @@ export class PurchaseListService {
       })
 
       await this.purchaseListRespository.save(createPurchaseListDto)
-      return { success: true, message: 'Purchase list successfully created.' };
+      return { success: true, message: 'Purchase list successfully created.', purchaseList };
     }
     catch(error){
       return { success: false, message: `Error creating purchase list: ${error.message}` };
@@ -54,7 +54,7 @@ export class PurchaseListService {
 
   async update(id: number, updatePurchaseListDto: UpdatePurchaseListDto) {
     const findpurchaseList = await this.purchaseListRespository.preload({
-      id:id,
+      id: id,
       ...updatePurchaseListDto
     })
 
@@ -63,13 +63,14 @@ export class PurchaseListService {
     }
 
     try {
-      await this.purchaseListRespository.save(updatePurchaseListDto);
-      return updatePurchaseListDto;
+      const updatedPurchaseList= await this.purchaseListRespository.save(findpurchaseList);
+      return { success: true, message: 'Purchase list successfully created.' , updatedPurchaseList } ;
     } catch (error) {
-      console.log(`Error is: ${error}`)
+      console.error(`Error occurred while updating: ${error}`);
+    return `Error occurred while updating Purchase List with id ${id}`;
     }
 
-    return `Purchase List with id ${id} has been updated`;
+    //return `Purchase List with id ${id} has been updated`;
   }
 
     async remove(id: number) {
