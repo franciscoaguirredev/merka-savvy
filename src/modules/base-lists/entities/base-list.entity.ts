@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, ManyToMany, PrimaryGeneratedColumn, JoinTable } from 'typeorm';
+import { Column, Entity, ManyToOne, ManyToMany, PrimaryGeneratedColumn, JoinTable, OneToMany, JoinColumn } from 'typeorm';
 import { Customer } from 'src/modules/customers/entities/customer.entity';
 import { Product } from 'src/modules/products/entities/product.entity';
 
@@ -11,7 +11,8 @@ export class BaseList {
     name: string;
 
 
-    @ManyToOne(() => Customer, customer => customer.baseLists)
+    @OneToMany(() => Customer, customer => customer.baseLists)
+    @JoinColumn()
     customer: Customer;
 
 

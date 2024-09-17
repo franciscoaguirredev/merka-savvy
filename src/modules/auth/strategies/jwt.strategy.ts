@@ -5,7 +5,8 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { ConfigService } from "@nestjs/config";
 import { Injectable, UnauthorizedException } from "@nestjs/common";
-import { Customer } from "src/modules/customers";
+import { Customer } from "src/modules/customers/entities/customer.entity";
+
 
 
 @Injectable()

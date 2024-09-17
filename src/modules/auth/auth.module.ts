@@ -3,35 +3,32 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Customer } from 'src/modules/customers';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './strategies/jwt.strategy';
-import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { CustomerModule } from '../customers/customer.module';
+import { CustomerService } from '../customers/customer.service';
 
 
 @Module({
-  imports: [
-    ConfigModule.forRoot(),
-    TypeOrmModule.forFeature([Customer]),
-    PassportModule.register({ defaultStrategy: 'jwt' }),
+  imports:[ConfigModule ,TypeOrmModule.forFeature([]), 
+  CustomerModule,
+    PassportModule.register({defaultStrategy:'jwt'}),
     JwtModule.registerAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: async (configService: ConfigService) => {
-        const secret = configService.get<string>('JWT_SECRET');
+      imports:[ConfigModule],
+      inject:[ConfigService],
+      useFactory:(configService:ConfigService)=>{      
         return {
-          secret,
-          signOptions: {
-            expiresIn: '2h',
-          },
-        };
+          secret:configService.get('JWT_SECRET'),
+          signOptions:{
+          expiresIn:'2h'
+        }
       }
-    }),
-
+    }
+    })
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy, JwtAuthGuard],
-  exports: [AuthService, JwtStrategy, JwtModule],
+  providers: [AuthService, CustomerService, JwtStrategy],
+  exports:[TypeOrmModule, JwtStrategy, PassportModule, JwtModule]
 })
-export class AuthModule { }
+export class AuthModule {}
