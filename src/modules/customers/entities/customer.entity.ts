@@ -1,17 +1,18 @@
+
 import { BaseList } from "src/modules/base-lists/entities/base-list.entity";
-import { PurchaseList } from "src/modules/purchase-lists/entities/purchase-list.entity";
+import { PurchaseList } from "src/modules/purchase-lists";
 import { Role } from "src/modules/roles";
-import { Column, CreateDateColumn, Entity, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, Timestamp, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, Timestamp, UpdateDateColumn } from "typeorm";
 
 @Entity("customers")
 export class Customer {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+    @PrimaryGeneratedColumn('increment')
+    id: number;
 
     @Column('varchar',{
-    length: 150,
-    nullable: false,
-    name: 'name'})
+        length: 150,
+        nullable: false,
+        name: 'name'})
     name: string;
 
     @Column('varchar',{
@@ -26,15 +27,15 @@ export class Customer {
         select: false, 
         nullable: false })
     password: string;
-    
+
     @CreateDateColumn({ type: 'timestamp' })
     registrationDate: Date;
 
     @UpdateDateColumn({ type: 'timestamp' })
     lastUpdateDate: Date;
 
-    @OneToOne(() => BaseList, baseList => baseList.customer)
-    baseList: BaseList;
+    @OneToMany(() => BaseList, baseList => baseList.customer)
+    baseLists: BaseList[];
 
     @OneToMany(() => PurchaseList, purchaseList => purchaseList.customer)
     purchaseLists: PurchaseList[];

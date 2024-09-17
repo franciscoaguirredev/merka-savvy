@@ -8,9 +8,9 @@ export class BaseListController {
   constructor(private readonly baseListService: BaseListService) {}
 
   @Post()
-  create(@Body() createBaseListDto: CreateBaseListDto) {
-    return this.baseListService.create(createBaseListDto);
-  }
+    createBaseList(@Body() createBaseListDto: CreateBaseListDto) {
+      return this.baseListService.createBaseList(createBaseListDto);
+    }
 
   @Get()
   findAll() {
