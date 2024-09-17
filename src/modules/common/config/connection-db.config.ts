@@ -14,6 +14,7 @@ export class DatabaseConfigService implements TypeOrmOptionsFactory {
         database: EnvConfig().name,
         username: EnvConfig().username,
         password: EnvConfig().password,
+        dropSchema: true,
         autoLoadEntities: true,
         synchronize: true ,    
       };

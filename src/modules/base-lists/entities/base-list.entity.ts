@@ -11,7 +11,7 @@ export class BaseList {
     name: string;
 
 
-    @OneToMany(() => Customer, customer => customer.baseList)
+    @OneToMany(() => Customer, customer => customer.baseLists)
     @JoinColumn()
     customer: Customer;
 
