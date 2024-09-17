@@ -4,8 +4,9 @@ import { UpdateBaseListDto } from './dto/update-base-list.dto';
 import { BaseList } from './entities/base-list.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Customer } from '../customers';
+
 import { Product } from '../products/entities/product.entity';
+import { Customer } from '../customers/entities/customer.entity';
 
 @Injectable()
 export class BaseListService {

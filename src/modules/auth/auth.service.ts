@@ -4,8 +4,9 @@ import { JwtService } from '@nestjs/jwt';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { JwtPayload } from './interfaces/jwt-payload-interface';
-import { Customer } from 'src/modules/customers';
+
 import { LoginDto } from './dto/login.dto';
+import { Customer } from '../customers/entities/customer.entity';
 
 
 @Injectable()

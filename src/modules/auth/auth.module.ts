@@ -3,14 +3,16 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Customer, CustomerService } from 'src/modules/customers';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './strategies/jwt.strategy';
+import { CustomerModule } from '../customers/customer.module';
+import { CustomerService } from '../customers/customer.service';
 
 
 @Module({
-  imports:[ConfigModule ,TypeOrmModule.forFeature([Customer]), 
+  imports:[ConfigModule ,TypeOrmModule.forFeature([]), 
+  CustomerModule,
     PassportModule.register({defaultStrategy:'jwt'}),
     JwtModule.registerAsync({
       imports:[ConfigModule],

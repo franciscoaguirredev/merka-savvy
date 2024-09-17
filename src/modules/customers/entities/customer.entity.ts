@@ -1,6 +1,6 @@
 
 import { BaseList } from "src/modules/base-lists/entities/base-list.entity";
-import { PurchaseList } from "src/modules/purchase-lists";
+import { PurchaseList } from "src/modules/purchase-lists/entities/purchase-list.entity";
 import { Role } from "src/modules/roles";
 import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, Timestamp, UpdateDateColumn } from "typeorm";
 
