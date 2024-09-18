@@ -14,23 +14,24 @@ export class JwtStrategy extends PassportStrategy(Strategy){
 
     constructor(
         @InjectRepository(Customer) private readonly userRepository:Repository<Customer>,
-        configService:ConfigService
+        private readonly configService:ConfigService
     ){
         super({
-            secretOrKey: configService.get('JWT_SECRET'),
+            secretOrKey: configService.get<string>('JWT_SECRET'),
             jwtFromRequest:ExtractJwt.fromAuthHeaderAsBearerToken(),
         });
+
     }
 
     async validate(payload:JwtPayload):Promise<Customer>{
 
         const {email} = payload
 
-        const customer = await this.userRepository.findOneBy({email});
+        const customer = await this.userRepository.findOneBy({ email });
 
-        if(!customer) throw new UnauthorizedException('Token no valid')
+        if(!customer) throw new UnauthorizedException('Token not valid')
 
-        return customer
+        return customer;
     }
 
 }

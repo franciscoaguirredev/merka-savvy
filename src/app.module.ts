@@ -19,7 +19,7 @@ import { PurchaseListModule } from './modules/purchase-lists/purchase-list.modul
     RolesModule,
     PurchaseListModule,
     DatabaseModule,
-    AuthModule
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

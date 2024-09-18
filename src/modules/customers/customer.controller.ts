@@ -1,7 +1,17 @@
-import { Controller, Post, Body, Patch, Param, NotFoundException, Delete, HttpCode, Get, HttpException, HttpStatus } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Patch,
+  UseGuards,
+  Delete,
+  Get,
+  Param,
+} from '@nestjs/common';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { Customer } from './entities/customer.entity';
 import { CustomerService } from './customer.service';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
 
 @Controller('customers')
@@ -10,19 +20,26 @@ export class CustomerController {
     private readonly customerService: CustomerService) {}
 
   @Post('register')
-  async create(@Body() createCustomerDto: CreateCustomerDto): Promise<Customer> {
+  async create(
+    @Body() createCustomerDto: CreateCustomerDto,
+  ): Promise<Customer> {
     return await this.customerService.create(createCustomerDto);
-    }
-    
+  }
+
   @Patch('update/')
-  async update(@Body('email') email: string, @Body() updateCustomerDto: UpdateCustomerDto): Promise<Customer>{
+  @UseGuards(JwtAuthGuard)
+  async update(
+    @Body('email') email: string,
+    @Body() updateCustomerDto: UpdateCustomerDto,
+  ): Promise<Customer> {
     return await this.customerService.update(email, updateCustomerDto);
   }
 
   @Delete('')
+  @UseGuards(JwtAuthGuard)
   async remove(@Body('email') email: string): Promise<{ message: string }> {
     await this.customerService.remove(email);
-    return { message: `Customer with email ${email} deleted succesfully` };
+    return { message: `Customer with email ${email} deleted successfully` };
   }
 
   @Get()
@@ -31,8 +48,7 @@ export class CustomerController {
   }
 
   @Get('/:email')
-  async findOne(@Param('email') email: string): Promise<Customer> {
+  async findOne(@Body('email') email: string): Promise<Customer> {
     return await this.customerService.getByEmail(email);
-    
   }
 }
