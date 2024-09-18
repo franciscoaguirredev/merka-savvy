@@ -64,7 +64,7 @@ export class CustomerService {
         throw new NotFoundException('Customer not found');
       }
     } catch (error) {
-      throw new InternalServerErrorException('Failed to delete customer');
+      throw new NotFoundException();
     }
   }
 
@@ -86,7 +86,7 @@ export class CustomerService {
 
       return customer;
     } catch (error) {
-      throw new InternalServerErrorException('Failed to get customer');
+      throw new NotFoundException('Failed to get customer');
     }
   }
 }

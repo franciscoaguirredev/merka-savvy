@@ -5,8 +5,7 @@ import {
   Patch,
   UseGuards,
   Delete,
-  Get,
-  Param,
+  Get
 } from '@nestjs/common';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { Customer } from './entities/customer.entity';
