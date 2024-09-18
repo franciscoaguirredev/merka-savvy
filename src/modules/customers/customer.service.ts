@@ -15,15 +15,21 @@ export class CustomerService {
 
   async create(createCustomerDto: CreateCustomerDto): Promise<Customer> {
     try {
-      const existingCustomer = await this.customerRepository.findOneBy({ email: createCustomerDto.email });
+      const existingCustomer = await this.customerRepository.findOneBy({
+        email: createCustomerDto.email,
+      });
+  
       if (existingCustomer) {
         throw new ConflictException('Customer already exists');
       }
-
-      const customer = this.customerRepository.create(createCustomerDto);
-      const hashedPassword = await bcrypt.hash(customer.password, 10);
-      customer.password = hashedPassword;
-      customer.role = 2;
+  
+      const hashedPassword = await bcrypt.hash(createCustomerDto.password, 10);
+      const customer = this.customerRepository.create({
+        ...createCustomerDto,
+        password: hashedPassword,
+        role: 2,
+      });
+  
       return await this.customerRepository.save(customer);
     } catch (error) {
       throw new InternalServerErrorException('Failed to create customer');
@@ -33,17 +39,17 @@ export class CustomerService {
   async update(email: string, updateCustomerDto: UpdateCustomerDto): Promise<Customer> {
     try {
       const customer = await this.customerRepository.findOneBy({ email });
+  
       if (!customer) {
-        throw new NotFoundException(`Customer with email ${email} not found`);
+        throw new NotFoundException('Customer not found');
       }
-
-      Object.assign(customer, updateCustomerDto);
-
+  
       if (updateCustomerDto.password) {
-        const hashedPassword = await bcrypt.hash(updateCustomerDto.password, 10);
-        customer.password = hashedPassword;
+        updateCustomerDto.password = await bcrypt.hash(updateCustomerDto.password, 10);
       }
-
+  
+      Object.assign(customer, updateCustomerDto);
+  
       return await this.customerRepository.save(customer);
     } catch (error) {
       throw new InternalServerErrorException('Failed to update customer');
@@ -53,8 +59,9 @@ export class CustomerService {
   async remove(email: string): Promise<void> {
     try {
       const result = await this.customerRepository.delete({ email });
+
       if (result.affected === 0) {
-        throw new NotFoundException(`Customer with email ${email} not found`);
+        throw new NotFoundException('Customer not found');
       }
     } catch (error) {
       throw new InternalServerErrorException('Failed to delete customer');
@@ -72,9 +79,11 @@ export class CustomerService {
   async getByEmail(email: string): Promise<Customer> {
     try {
       const customer = await this.customerRepository.findOneBy({ email });
+
       if (!customer) {
-        throw new NotFoundException(`Customer with email ${email} not found`);
+        throw new NotFoundException('Customer not found');
       }
+
       return customer;
     } catch (error) {
       throw new InternalServerErrorException('Failed to get customer');
