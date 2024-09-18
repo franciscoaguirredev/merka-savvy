@@ -21,8 +21,7 @@ export class CustomerController {
 
   @Post('register')
   async create(
-    @Body() createCustomerDto: CreateCustomerDto,
-  ): Promise<Customer> {
+    @Body() createCustomerDto: CreateCustomerDto): Promise<Customer> {
     return await this.customerService.create(createCustomerDto);
   }
 

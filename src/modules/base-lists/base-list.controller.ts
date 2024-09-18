@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { BaseListService } from './base-list.service';
 import { CreateBaseListDto } from './dto/create-base-list.dto';
 import { UpdateBaseListDto } from './dto/update-base-list.dto';
@@ -16,6 +16,12 @@ export class BaseListController {
   findAll() {
     return this.baseListService.findAll();
   }
+
+  @Get('all')
+  getAllBaseLists(){
+    return this.baseListService.findAllWithProducts();
+  }
+    
 
   @Get(':id')
   findOne(@Param('id') id: string) {
