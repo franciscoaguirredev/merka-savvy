@@ -22,14 +22,13 @@ export class AuthService {
     async login(loginDto:LoginDto){
         const {password, email} = loginDto
 
-        const user = await this.userRepository.findOne({where:{email}, select: {email:true, password:true}})
-        console.log(user)
-
+        const user = await this.userRepository.createQueryBuilder("customer").leftJoinAndSelect("customer.role", "role").where("customer.email = :email", { email }).select(["customer.name", "customer.email", "customer.password", "role.name"]).getOne();
         if(!user || !bcrypt.compareSync(password, user.password))
             throw new UnauthorizedException('Credentials are not valid')
-            console.log()
         return {
-            ...user,
+            name: user.name,
+            email: user.email,
+            role: user.role,
             token:this.getJwtToken({email: user.email})
         }
     }

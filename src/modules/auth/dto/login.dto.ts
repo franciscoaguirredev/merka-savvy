@@ -1,8 +1,7 @@
 import { Transform } from "class-transformer";
 import { IsEmail, IsString, IsStrongPassword, MinLength } from "class-validator";
 
-export class LoginDto{
-
+export class LoginDto {
     @IsEmail()
     email:string;
     

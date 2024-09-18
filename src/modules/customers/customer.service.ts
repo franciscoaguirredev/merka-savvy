@@ -13,7 +13,7 @@ export class CustomerService {
     private readonly customerRepository: Repository<Customer>,
   ) {}
 
-  async create(createCustomerDto: CreateCustomerDto): Promise<Customer> {
+  async create(createCustomerDto: CreateCustomerDto): Promise<Partial<Customer>> {
     try {
       const existingCustomer = await this.customerRepository.findOneBy({
         email: createCustomerDto.email,
@@ -30,7 +30,13 @@ export class CustomerService {
         role: 2,
       });
   
-      return await this.customerRepository.save(customer);
+      await this.customerRepository.save(customer);
+      return {
+        name: customer.name,
+        email: customer.email,
+        role: customer.role,
+        id: customer.id
+      }
     } catch (error) {
       throw new InternalServerErrorException('Failed to create customer');
     }
