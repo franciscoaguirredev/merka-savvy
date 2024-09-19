@@ -8,7 +8,6 @@ import { CanActivate, ExecutionContext } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { Observable } from 'rxjs';
 
-// Mock del repositorio de Customer
 const mockCustomerRepository = {
     find: jest.fn().mockResolvedValue([]),
     findOne: jest.fn().mockResolvedValue(null),
