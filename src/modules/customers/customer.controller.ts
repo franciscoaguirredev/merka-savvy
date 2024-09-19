@@ -5,8 +5,7 @@ import {
   Patch,
   UseGuards,
   Delete,
-  Get,
-  Param,
+  Get
 } from '@nestjs/common';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { Customer } from './entities/customer.entity';
@@ -22,7 +21,7 @@ export class CustomerController {
   @Post('register')
   async create(
     @Body() createCustomerDto: CreateCustomerDto,
-  ): Promise<Customer> {
+  ): Promise<Partial<Customer>> {
     return await this.customerService.create(createCustomerDto);
   }
 
