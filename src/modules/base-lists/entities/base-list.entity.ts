@@ -10,11 +10,12 @@ export class BaseList {
     @Column({nullable:false})
     name: string;
 
+    @Column()
+    budget:number
 
-    @OneToMany(() => Customer, customer => customer.baseLists)
+    @ManyToOne(() => Customer, customer => customer.baseLists)
     @JoinColumn()
     customer: Customer;
-
 
     @ManyToMany(() => Product, product => product.baseLists)
     @JoinTable() 

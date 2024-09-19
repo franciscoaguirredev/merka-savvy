@@ -3,13 +3,13 @@ import { IsString, IsArray, IsNumber, IsNotEmpty, ValidateNested } from 'class-v
 import { CreateProductDto } from 'src/modules/products/dto/create-product.dto';
 
 export class CreateBaseListDto {
-    @IsNotEmpty()
-    @IsString()
-    name: string;
+  @IsNotEmpty()
+  @IsString()
+  name: string;
 
-    @IsNotEmpty()
-    @IsNumber()
-    customerId: number;
+  @IsNotEmpty()
+  @IsNumber()
+  customerId: number;
 
   @IsArray()
   @ValidateNested({ each: true })

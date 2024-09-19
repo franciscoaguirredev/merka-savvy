@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateBaseListDto } from './dto/create-base-list.dto';
 import { UpdateBaseListDto } from './dto/update-base-list.dto';
 import { BaseList } from './entities/base-list.entity';
@@ -20,7 +20,7 @@ export class BaseListService {
     private readonly productRepository: Repository<Product>,
   ) {}
 
-  async createBaseList(createBaseListDto: CreateBaseListDto): Promise<BaseList> {
+  async createBaseList(createBaseListDto: CreateBaseListDto){
     const { name, customerId, products } = createBaseListDto;
     
     try {
@@ -30,21 +30,41 @@ export class BaseListService {
         }
 
       const createdProducts = [];
+      const activeProducts = [];
+      const inactiveProducts =[]
+      let budget= 0
       for (const productData of products) {
         const newProduct = this.productRepository.create(productData);
         const savedProduct = await this.productRepository.save(newProduct);
         createdProducts.push(savedProduct);
+        if (productData.isActive == true){
+          budget = budget + productData.price
+          activeProducts.push(productData)
+        }else if(productData.isActive == false){
+          inactiveProducts.push(productData)
+        } 
       }
 
       const baseList = this.baseListRepository.create({
         name,
+        budget,
         customer,
         products: createdProducts,
       });
 
-      return await this.baseListRepository.save(baseList);
+      const newbaseList = await this.baseListRepository.save(baseList);
+
+      return {
+        Customer: customer.id,
+        idBaseList: newbaseList.id,
+        BaseListName: name,
+        Budget: budget,
+        TotalProducts: products.length,
+        ActiveProducts: activeProducts,
+        InactiveProducts: inactiveProducts
+      }
     } catch (error) {
-      console.error(error)
+      console.log(error)
     }
   }
 
@@ -54,20 +74,129 @@ export class BaseListService {
     });
   }
 
-
   async findAll() {
       return await this.baseListRepository.find()
   }
 
-  findOne(id: number) {
-      return `This action returns a #${id} baseList`;
+  async findOne(baseListId: string) {
+    try {
+      const baseList = await this.baseListRepository.findOne({
+      where: { id: baseListId },
+      relations: ['products'],
+    });
+
+    if (!baseList) {
+      throw new NotFoundException(`BaseList con id ${baseListId} no encontrada`);
+    }
+    
+    const {products} = baseList
+      const activeProducts = [];
+      const inactiveProducts =[]
+      let budget= 0
+      for (const productData of products) {
+        if (productData.isActive == true){
+          budget = budget + productData.price
+          activeProducts.push(productData)
+        }else if(productData.isActive == false){
+          inactiveProducts.push(productData)
+        } 
+      }
+
+    return{
+        id: baseList.id,
+        BaseListName: baseList.name,
+        Budget: budget,
+        TotalProducts: activeProducts.length,
+        ActiveProducts: activeProducts,
+        InactiveProducts: inactiveProducts
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
 
-  update(id: number, updateBaseListDto: UpdateBaseListDto) {
-    return `This action updates a #${id} baseList`;
+  async updateBaseList(id: string, customer_id: number, updateBaseListDto: UpdateBaseListDto){
+    const { name, customerId, products } = updateBaseListDto;
+    try {
+      const baseList = await this.baseListRepository.findOne({
+      where: { id },
+      relations: {products:true, customer:true},
+      
+    });
+    
+    if (!baseList) {
+      throw new NotFoundException('BaseList not found');
+    }
+
+    if (baseList.customer.id !== customer_id) {
+      throw new BadRequestException('This BaseList does not belong to the customer');
+    }
+  
+    baseList.name = name;
+
+    const existingProducts = baseList.products;
+    const activeProducts = [];
+    const inactiveProducts =[];
+    let budget= 0
+    
+    for (const productDto of products) {
+      const existingProduct = existingProducts.find(
+        (prod) => prod.name === productDto.name
+      );
+
+      if (existingProduct) {
+        existingProduct.price = productDto.price;
+        existingProduct.provider = productDto.provider;
+        existingProduct.measure = productDto.measure;
+        existingProduct.isActive = productDto.isActive;
+      } else {
+        const newProduct = this.productRepository.create(productDto);
+        existingProducts.push(newProduct);
+      }
+
+      if(productDto.isActive==true){
+        activeProducts.push(productDto)
+        budget = budget + productDto.price
+      }else if(productDto.isActive == false){
+        inactiveProducts.push(productDto)
+      }
+    }
+    baseList.budget = budget
+    await this.productRepository.save(existingProducts);
+    const newbaseList = await this.baseListRepository.save(baseList);
+    return {
+        idBaseList: newbaseList.id,
+        BaseListName: newbaseList.name,
+        Budget: budget,
+        TotalProducts: activeProducts.length,
+        ActiveProducts: activeProducts,
+        InactiveProducts: inactiveProducts
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
 
-  remove(id: number) {
-      return `This action removes a #${id} baseList`;
-  } 
+  async deleteBaseList(baseListId: string){
+    try {
+      const baseList = await this.baseListRepository.findOne({
+      where: { id: baseListId },
+      relations: ['products'], 
+    });
+
+    if (!baseList) {
+      throw new NotFoundException(`BaseList con id ${baseListId} no encontrada`);
+    }
+
+    if (baseList.products && baseList.products.length > 0) {
+      await this.productRepository.remove(baseList.products);
+    }
+    await this.baseListRepository.remove(baseList);
+    
+    } catch (error) {
+      console.log(error)
+    }
+  }
 }
+
+
