@@ -35,21 +35,23 @@ describe('CustomerService', () => {
 
     describe('create', () => {
         it('should create a customer successfully', async () => {
-            const createCustomerDto = { email: 'test@example.com', password: 'hashedPassword', name: 'test name' };
-            const customer = { ...createCustomerDto, role: 2 };
+            const createCustomerDto = {id: 1, email: 'test@example.com', password: 'plainPassword', name: 'test name' };
+            const customer = { ...createCustomerDto, role: 2, password: 'hashedPassword' };
+            const savedCustomer = { ...customer }
 
             mockCustomerRepository.findOneBy.mockResolvedValue(null);
             mockCustomerRepository.create.mockReturnValue(customer);
-            mockCustomerRepository.save.mockResolvedValue({ ...customer });
+            mockCustomerRepository.save.mockResolvedValue(savedCustomer);
 
             jest.spyOn(bcrypt, 'hash').mockImplementation(async (password: string, saltOrRounds: string | number) => 'hashedPassword');
 
             const result = await service.create(createCustomerDto);
 
-            expect(result).toEqual({ ...customer });
+            const { password, ...expectedResult } = savedCustomer
+            expect(result).toEqual(expectedResult);
             expect(mockCustomerRepository.findOneBy).toHaveBeenCalledWith({ email: createCustomerDto.email });
-            expect(mockCustomerRepository.create).toHaveBeenCalledWith({ ...createCustomerDto, role: 2 });
-            expect(mockCustomerRepository.save).toHaveBeenCalledWith({ ...customer, password: 'hashedPassword' });
+            expect(mockCustomerRepository.create).toHaveBeenCalledWith({ ...createCustomerDto, role: 2, password: 'hashedPassword' });
+            expect(mockCustomerRepository.save).toHaveBeenCalledWith(savedCustomer);
         });
 
         it('should throw ConflictException if customer already exists', async () => {
