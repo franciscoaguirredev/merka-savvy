@@ -5,11 +5,14 @@ import { Type } from 'class-transformer';
 import { CreateProductDto } from 'src/modules/products/dto/create-product.dto';
 
 export class UpdateBaseListDto {
-    @IsString()
+  @IsString()
   name: string;
 
   @IsNumber()
   customerId: number; 
+
+  @IsNumber()
+  budget:number
 
   @IsArray()
   @ValidateNested({ each: true })

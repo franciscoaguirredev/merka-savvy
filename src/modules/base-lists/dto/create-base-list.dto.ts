@@ -7,6 +7,9 @@ export class CreateBaseListDto {
   @IsString()
   name: string;
 
+  @IsNumber()
+  budget:number
+
   @IsNotEmpty()
   @IsNumber()
   customerId: number;

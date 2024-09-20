@@ -21,7 +21,7 @@ export class BaseListService {
   ) {}
 
   async createBaseList(createBaseListDto: CreateBaseListDto){
-    const { name, customerId, products } = createBaseListDto;
+    const { name, budget, customerId, products } = createBaseListDto;
     
     try {
         const customer = await this.customerRepository.findOne({ where: { id: customerId } });  
@@ -47,6 +47,7 @@ export class BaseListService {
 
       const baseList = this.baseListRepository.create({
         name,
+        budget,
         total,
         customer,
         products: createdProducts,
@@ -58,7 +59,8 @@ export class BaseListService {
         Customer: customer.id,
         idBaseList: newbaseList.id,
         BaseListName: name,
-        Total: total,
+        Budget: newbaseList.budget,
+        Expenses: total,
         TotalProducts: products.length,
         ActiveProducts: activeProducts,
         InactiveProducts: inactiveProducts
@@ -116,7 +118,7 @@ export class BaseListService {
   }
 
   async updateBaseList(id: string, customer_id: number, updateBaseListDto: UpdateBaseListDto){
-    const { name, customerId, products } = updateBaseListDto;
+    const { name, customerId, products, budget } = updateBaseListDto;
     try {
       const baseList = await this.baseListRepository.findOne({
       where: { id },
@@ -133,6 +135,8 @@ export class BaseListService {
     }
   
     baseList.name = name;
+    baseList.budget = budget
+
 
     const existingProducts = baseList.products;
     const activeProducts = [];
@@ -167,7 +171,8 @@ export class BaseListService {
     return {
         idBaseList: newbaseList.id,
         BaseListName: newbaseList.name,
-        Total: total,
+        Budget: newbaseList.budget,
+        Expenses: total,
         TotalProducts: activeProducts.length,
         ActiveProducts: activeProducts,
         InactiveProducts: inactiveProducts

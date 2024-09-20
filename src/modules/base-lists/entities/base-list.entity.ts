@@ -11,6 +11,9 @@ export class BaseList {
     name: string;
 
     @Column()
+    budget:number
+
+    @Column()
     total:number
 
     @ManyToOne(() => Customer, customer => customer.baseLists)
