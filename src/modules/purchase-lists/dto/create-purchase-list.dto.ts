@@ -8,7 +8,6 @@ export class CreatePurchaseListDto {
 
     @IsNotEmpty()
     @IsString()
-    @Min(1)
     baseListId: string
 
     @IsNumber()

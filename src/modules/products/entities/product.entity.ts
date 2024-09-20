@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Decimal128, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { BaseList } from 'src/modules/base-lists/entities/base-list.entity';
 
 @Entity('products')
@@ -17,6 +17,9 @@ export class Product{
 
     @Column({nullable:false})
     measure: string;
+
+    @Column()
+    quantityBL: number
 
     @Column({ type: 'boolean', default: true })
     isActive: boolean;

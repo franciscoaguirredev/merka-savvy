@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, ParseIntPipe, ParseUUIDPipe } from '@nestjs/common';
 import { BaseListService } from './base-list.service';
 import { CreateBaseListDto } from './dto/create-base-list.dto';
 import { UpdateBaseListDto } from './dto/update-base-list.dto';
@@ -17,18 +17,28 @@ export class BaseListController {
     return this.baseListService.findAll();
   }
 
+  @Get('all')
+  getAllBaseLists(){
+    return this.baseListService.findAllWithProducts();
+  }
+    
+
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.baseListService.findOne(+id);
+    return this.baseListService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBaseListDto: UpdateBaseListDto) {
-    return this.baseListService.update(+id, updateBaseListDto);
+  update(
+    @Param('id') base_list_id: string,
+    @Body('customerId',ParseIntPipe) customer_id: number,
+    @Body() update_base_list_dto: UpdateBaseListDto,
+  ) {
+    return this.baseListService.updateBaseList(base_list_id, customer_id, update_base_list_dto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.baseListService.remove(+id);
+  async deleteBaseList(@Param('id', ParseIntPipe) baseListId: string): Promise<void> {
+    return this.baseListService.deleteBaseList(baseListId);
   }
 }
