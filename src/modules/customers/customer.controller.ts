@@ -12,13 +12,17 @@ import { Customer } from './entities/customer.entity';
 import { CustomerService } from './customer.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Customers')
 @Controller('customers')
 export class CustomerController {
   constructor(
     private readonly customerService: CustomerService) {}
 
+  
   @Post('register')
+  @ApiResponse({status:201, description: 'Customer was created', type: Customer})
   async create(
     @Body() createCustomerDto: CreateCustomerDto,
   ): Promise<Partial<Customer>> {
