@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe, Logger as logger } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { SwaggerConfig } from './modules/common/config/swagger.config';
 
 
 async function bootstrap() {
@@ -15,14 +16,8 @@ async function bootstrap() {
 
   ));
 
-  const config = new DocumentBuilder()
-    .setTitle('Merka-Savvy')
-    .setDescription('Merka-Savvy API description')
-    .setVersion('1.0')
-    .build();
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
-
+  SwaggerConfig(app)
+  
   await app.listen(3000);
   logger.log(`App running on port 3000`);
 }
