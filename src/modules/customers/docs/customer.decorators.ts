@@ -1,4 +1,4 @@
-import { ApiBody, ApiOperation, ApiParam, ApiQuery } from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiParam, ApiQuery, ApiResponse } from '@nestjs/swagger';
 import { applyDecorators, Type } from '@nestjs/common';
 import { 
     ApiBadRequest,   
@@ -7,6 +7,7 @@ import {
     ApiSuccessResponses,
     ApiSuccessResponsesArray, } from 'src/modules/common/docs';
 import { CreateCustomerDto } from '../dto/create-customer.dto';
+import { Customer } from '../entities/customer.entity';
 
 export function ApiDocPostCustomer<T>(entity: Type<T>) {
   const description =
@@ -36,21 +37,27 @@ export function ApiDocGetCustomers<T>(entity: Type<T>) {
   );
 }
 
-export function ApiDocGetOneCustomer<T>(entity: Type<T>) {
-  const description =
-    'This endpoint will return customer information by its email';
-  return applyDecorators(
-    ApiOperation({
-      summary: 'Find one customer by email',
-      description,
-    }),
-    ApiParam({
-      name: 'email',
+export function ApiDocGetOneCustomer<T>() {
+return applyDecorators(
+    ApiOperation({ summary: 'Find customer by email' }),
+    ApiBody({
       required: true,
-      description: 'Email of the customer to search for',
+      description: 'The email of the customer to be retrieved',
+      type: String,
     }),
-    ApiSuccessResponses(entity),
-    ApiBadRequest()
+    ApiResponse({
+      status: 200,
+      description: 'The customer has been successfully retrieved',
+      type: Customer,
+    }),
+    ApiResponse({
+      status: 404,
+      description: 'Customer not found',
+    }),
+    ApiResponse({
+      status: 500,
+      description: 'Internal server error',
+    }),
   );
 }
 

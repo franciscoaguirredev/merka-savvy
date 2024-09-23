@@ -30,7 +30,7 @@ export class CustomerController {
     return await this.customerService.getAllCustomers();
   }
 
-  @ApiDocGetOneCustomer(Customer)
+
   @Get('/:email')
   async findOne(@Body('email') email: string): Promise<Customer> {
     return await this.customerService.getByEmail(email);
