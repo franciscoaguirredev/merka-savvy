@@ -5,16 +5,19 @@ import {
   Patch,
   UseGuards,
   Delete,
-  Get
+  Get,
+  Param
 } from '@nestjs/common';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { Customer } from './entities/customer.entity';
 import { CustomerService } from './customer.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiCreatedResponse, ApiForbiddenResponse, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiDeleteCustomer, ApiDocPostCustomer, ApiGetAllCustomers, ApiGetCustomerByEmail } from './docs/customer.response';
 
 @ApiTags('Customers')
+@ApiBearerAuth()
 @Controller('customers')
 export class CustomerController {
   constructor(
@@ -22,7 +25,7 @@ export class CustomerController {
 
   
   @Post('register')
-  @ApiResponse({status:201, description: 'Customer was created', type: Customer})
+  @ApiDocPostCustomer()
   async create(
     @Body() createCustomerDto: CreateCustomerDto,
   ): Promise<Partial<Customer>> {
@@ -38,20 +41,23 @@ export class CustomerController {
     return await this.customerService.update(email, updateCustomerDto);
   }
 
+  @ApiDeleteCustomer()
   @Delete('')
   @UseGuards(JwtAuthGuard)
-  async remove(@Body('email') email: string): Promise<{ message: string }> {
-    await this.customerService.remove(email);
-    return { message: `Customer with email ${email} deleted successfully` };
+  remove(@Body('email') email: string):Promise<void>{
+    return this.customerService.remove(email);
   }
 
+
+  @ApiGetAllCustomers()
   @Get()
   async findAll(): Promise<Customer[]> {
     return await this.customerService.getAllCustomers();
   }
 
+  @ApiGetCustomerByEmail()
   @Get('/:email')
-  async findOne(@Body('email') email: string): Promise<Customer> {
-    return await this.customerService.getByEmail(email);
+  findOne(@Param('email') email: string){
+    return this.customerService.getByEmail(email);
   }
 }

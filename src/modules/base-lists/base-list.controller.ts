@@ -2,9 +2,10 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Query, ParseIntPipe,
 import { BaseListService } from './base-list.service';
 import { CreateBaseListDto } from './dto/create-base-list.dto';
 import { UpdateBaseListDto } from './dto/update-base-list.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Bases-List')
+@ApiBearerAuth()
 @Controller('base-list')
 export class BaseListController {
   constructor(private readonly baseListService: BaseListService) {}
