@@ -23,7 +23,19 @@ export class CustomerController {
   constructor(
     private readonly customerService: CustomerService) {}
 
-  
+    @ApiGetAllCustomers()
+  @Get()
+  async findAll(): Promise<Customer[]> {
+    return await this.customerService.getAllCustomers();
+  }
+
+  @ApiGetCustomerByEmail()
+  @Get('/:email')
+  findOne(@Param('email') email: string){
+    return this.customerService.getByEmail(email);
+  }
+
+
   @Post('register')
   @ApiDocPostCustomer()
   async create(
@@ -42,22 +54,11 @@ export class CustomerController {
   }
 
   @ApiDeleteCustomer()
+  @ApiBearerAuth() 
   @Delete('')
   @UseGuards(JwtAuthGuard)
-  remove(@Body('email') email: string):Promise<void>{
+  remove(@Body('email') email: string): Promise<string>{
     return this.customerService.remove(email);
   }
 
-
-  @ApiGetAllCustomers()
-  @Get()
-  async findAll(): Promise<Customer[]> {
-    return await this.customerService.getAllCustomers();
-  }
-
-  @ApiGetCustomerByEmail()
-  @Get('/:email')
-  findOne(@Param('email') email: string){
-    return this.customerService.getByEmail(email);
-  }
 }

@@ -62,13 +62,15 @@ export class CustomerService {
     }
   }
 
-  async remove(email: string): Promise<void> {
+  async remove(email: string): Promise<string> {
     try {
       const result = await this.customerRepository.delete({ email });
 
       if (result.affected === 0) {
         throw new NotFoundException('Customer not found');
       }
+
+      return 'Customer deleted succesfully'
     } catch (error) {
       throw new NotFoundException();
     }

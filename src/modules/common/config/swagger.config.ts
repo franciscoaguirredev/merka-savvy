@@ -7,14 +7,7 @@ export const SwaggerConfig = (app: INestApplication<any>): void => {
     .setTitle('Merka-Savvy')
     .setDescription('Merka-Savvy - Documentation - Endpoints')
     .setVersion(versionApp)
-    .addBearerAuth(
-        {
-            type: 'http',
-            scheme: 'bearer',
-            bearerFormat: 'JWT',
-        },
-        'access-token'
-    )
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup(`api/v1/docs`, app, document);

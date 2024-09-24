@@ -58,7 +58,19 @@ export function ApiGetAllCustomers() {
 export function ApiDeleteCustomer() {
   return applyDecorators(
     ApiOperation({ summary: 'Delete a customer by email' }),
-    ApiBearerAuth(),
+    ApiBody({
+      description: 'Email of the customer to be deleted',
+      schema: {
+        type: 'object',
+        properties: {
+          email: {
+            type: 'string',
+            example: 'example@example.com',
+          },
+        },
+        required: ['email'],
+      },
+    }),
     ApiResponse({
       status: 200,
       description: 'Customer deleted successfully',
