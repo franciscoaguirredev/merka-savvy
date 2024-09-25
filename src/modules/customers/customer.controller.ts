@@ -21,9 +21,9 @@ import { ApiDeleteCustomer, ApiDocPostCustomer, ApiGetAllCustomers, ApiGetCustom
 @Controller('customers')
 export class CustomerController {
   constructor(
-    private readonly customerService: CustomerService) {}
+  private readonly customerService: CustomerService) {}
 
-    @ApiGetAllCustomers()
+  @ApiGetAllCustomers()
   @Get()
   async findAll(): Promise<Customer[]> {
     return await this.customerService.getAllCustomers();
