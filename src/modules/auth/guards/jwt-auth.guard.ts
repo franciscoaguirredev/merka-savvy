@@ -28,7 +28,12 @@ export class JwtAuthGuard implements CanActivate {
                 {
                     secret: EnvConfig().jwtSecret
                 });
-            request.user = payload;
+            
+            request.user = {
+                id: payload.sub,
+                username: payload.username,
+                role: payload.role,
+            };
         } catch (error) {
             throw new UnauthorizedException('Invalid token');
         }

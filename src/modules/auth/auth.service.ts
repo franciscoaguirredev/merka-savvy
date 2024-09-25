@@ -23,18 +23,23 @@ export class AuthService {
         const {password, email} = loginDto
 
         const user = await this.userRepository.createQueryBuilder("customer").leftJoinAndSelect("customer.role", "role").where("customer.email = :email", { email }).select(["customer.name", "customer.email", "customer.password", "role.name"]).getOne();
-        if(!user || !bcrypt.compareSync(password, user.password))
-            throw new UnauthorizedException('Credentials are not valid')
+        if (!user || !bcrypt.compareSync(password, user.password)) {
+            throw new UnauthorizedException('Credentials are not valid');
+        }
+
         return {
             name: user.name,
             email: user.email,
-            role: user.role,
-            token:this.getJwtToken({email: user.email})
+            role: user.role.name,
+            token: this.getJwtToken({ email: user.email, role: user.role.name }),
         }
     }
 
     private getJwtToken(payload:JwtPayload){
-        const token = this.jwtService.sign(payload);
+        const token = this.jwtService.sign({
+            email: payload.email,
+            role: payload.role.toString()
+        });
         return token
     }
 

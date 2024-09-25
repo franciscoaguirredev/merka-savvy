@@ -27,14 +27,14 @@ export class CustomerService {
       const customer = this.customerRepository.create({
         ...createCustomerDto,
         password: hashedPassword,
-        role: 2,
+        role,
       });
   
       await this.customerRepository.save(customer);
       return {
         name: customer.name,
         email: customer.email,
-        role: customer.role,
+        role: customer.role.name,
         id: customer.id
       }
     } catch (error) {

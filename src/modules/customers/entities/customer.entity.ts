@@ -1,8 +1,7 @@
-
 import { BaseList } from "src/modules/base-lists/entities/base-list.entity";
 import { PurchaseList } from "src/modules/purchase-lists/entities/purchase-list.entity";
 import { Role } from "src/modules/roles";
-import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, Timestamp, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity("customers")
 export class Customer {
@@ -41,6 +40,6 @@ export class Customer {
     purchaseLists: PurchaseList[];
     purchaseListsId: any;
 
-    @ManyToOne(() => Role, Role => Role.id)
-    role: number;
+    @ManyToOne(() => Role, role => role.customers)
+    role: Role;
 }

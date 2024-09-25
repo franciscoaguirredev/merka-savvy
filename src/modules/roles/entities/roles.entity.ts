@@ -10,7 +10,7 @@ export class Role{
     @Column()
     name:string
 
-    @OneToMany(() => Customer,Customer =>Customer.role)
-    Customers: Customer[];
+    @OneToMany(() => Customer, (customer) => customer.role)
+    customers: Customer[];
 
 }

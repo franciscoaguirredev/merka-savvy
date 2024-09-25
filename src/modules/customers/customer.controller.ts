@@ -1,22 +1,25 @@
 import {
-  Controller,
-  Post,
   Body,
-  Patch,
-  UseGuards,
+  Controller,
   Delete,
-  Get
+  Get,
+  Param,
+  Patch,
+  Post,
+  UseGuards
 } from '@nestjs/common';
-import { CreateCustomerDto } from './dto/create-customer.dto';
-import { Customer } from './entities/customer.entity';
-import { CustomerService } from './customer.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { RolesGuard } from '../roles/roles-guard/roles.guard';
+import { CustomerService } from './customer.service';
+import { CreateCustomerDto } from './dto/create-customer.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
+import { Customer } from './entities/customer.entity';
+import { Roles } from '../roles/decorators/roles.decorator';
 
 @Controller('customers')
 export class CustomerController {
   constructor(
-    private readonly customerService: CustomerService) {}
+    private readonly customerService: CustomerService) { }
 
   @Post('register')
   async create(
@@ -26,7 +29,8 @@ export class CustomerController {
   }
 
   @Patch('update/')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('administrador')
   async update(
     @Body('email') email: string,
     @Body() updateCustomerDto: UpdateCustomerDto,
@@ -47,7 +51,7 @@ export class CustomerController {
   }
 
   @Get('/:email')
-  async findOne(@Body('email') email: string): Promise<Customer> {
+  async findOne(@Param('email') email: string): Promise<Customer> {
     return await this.customerService.getByEmail(email);
   }
 }
